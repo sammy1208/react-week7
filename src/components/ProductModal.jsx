@@ -116,8 +116,6 @@ function ProductModal({
         status: "success"
       }))
     } catch (error) {
-      console.log(error.response.data.message)
-
       const { message } = error.response.data;
 
       dispatch(pushMessage({

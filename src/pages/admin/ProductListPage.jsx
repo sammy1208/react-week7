@@ -5,6 +5,7 @@ import axios from "axios";
 import Pagination from "../../components/Pagination";
 import ProductModal from "../../components/ProductModal";
 import DelProductModal from "../../components/DelProductModal";
+import { useNavigate } from "react-router-dom";
 // import ProductPage from './pages/ProductPage';
 // import './App.css'
 
@@ -24,10 +25,13 @@ const defaultModalState = {
   imagesUrl: [""]
 };
 
-function ProductPage( ) {
+function ProductListPage () {
   const [products, setProduct] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDleModalOpen, setIsDleModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState(null);
+  const [tempProduct, setTempProduct] = useState(defaultModalState);
+  const navigate = useNavigate();
 
   const handleOpenModal = (mode, product) => {
     setModalMode(mode);
@@ -59,15 +63,17 @@ function ProductPage( ) {
       );
       setProduct(res.data.products);
       setPageInfo(res.data.pagination);
+      console.log(res.data.pagination)
     } catch (error) {
       alert(error.message)
+      
     }
   };
 
   const checkUser = async () => {
     try {
       await axios.post(`${BASE_URL}/v2/api/user/check`);
-      getProduct();
+      getProduct(1);
     } catch (error) {
       alert(error.message)
     }
@@ -78,18 +84,40 @@ function ProductPage( ) {
       /(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/,
       "$1"
     );
-
+    console.log('Token:', token)
+    if(!token){
+      navigate('/login');
+    }
     axios.defaults.headers.common["Authorization"] = token;
 
     checkUser();
   }, []);
 
-  const [modalMode, setModalMode] = useState(null);
-  const [tempProduct, setTempProduct] = useState(defaultModalState);
+
+
+
+  const handelLogout = async () => {
+    try {
+      await axios.post(`${BASE_URL}/v2/logout`);
+      navigate('/login')
+    } catch (error) {
+      alert(`登出失敗:${error.message}`)
+    }
+  };
+
 
   return (
     <>
       <div className="container py-5">
+      <div className="row mb-3">
+        <div className="justify-content-end">
+          <button
+          onClick={handelLogout}
+          type="button" className="btn btn-secondary">
+            登出
+          </button>
+        </div>
+      </div>
         <div className="row">
           <div className="col">
             <div className="d-flex justify-content-between">
@@ -181,4 +209,4 @@ function ProductPage( ) {
   );
 }
 
-export default ProductPage;
+export default ProductListPage;

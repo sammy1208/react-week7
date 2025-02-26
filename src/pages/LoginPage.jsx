@@ -11,8 +11,8 @@ const routes = [
 
 function LoginPage( ) {
   const [account, setAccount] = useState({
-    username: "",
-    password: ""
+    username: "qa821746@gmail.com",
+    password: "az821746"
   });
 
   const navigate = useNavigate();
@@ -53,10 +53,11 @@ function LoginPage( ) {
         /(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/,
         "$1"
     );
-    if(token.length > 0){
-        axios.defaults.headers.common["Authorization"] = token;
-        checkUser();
+    if(!token){
+      return;
     }
+    axios.defaults.headers.common["Authorization"] = token;
+    checkUser();
 
   },[])
 

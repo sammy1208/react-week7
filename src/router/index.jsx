@@ -1,13 +1,15 @@
 import { createHashRouter } from "react-router-dom"
 import FrontLayout from "../layouts/FrontLayout"
-import HomePage from "../pages/Homepage"
 import ProductsPage from "../pages/ProductsPage"
 import ShoppCartPage from "../pages/ShoppCartPage"
 import ProductsDetailPage from "../pages/ProductsDetailPage"
 import LoginPage from "../pages/LoginPage"
 import ProductListPage from "../pages/admin/ProductListPage"
-import AdminLayout from "../layouts/AdminLayout "
+// import AdminLayout from "../layouts/AdminLayout"
 import NotFound from "../pages/NotFound"
+import HomePage from "../pages/HomePage"
+import AdminLayout from "../layouts/AdminLayout"
+
 
 const router = createHashRouter ([
     {
@@ -42,8 +44,12 @@ const router = createHashRouter ([
         element: < AdminLayout />,
         children: [
             {
+                index: true,
+                element:< ProductListPage />
+            },
+            {
                 path: 'productList',
-                element: <ProductListPage />
+                element: < ProductListPage />
             }
         ]
     },
@@ -51,6 +57,12 @@ const router = createHashRouter ([
         path: '*',
         element: < NotFound />
     }
-])
+], {
+    future: { 
+        v7_relativeSplatPath: true,
+        v7_startTransition: true,
+     }
+    
+})
 
 export default router

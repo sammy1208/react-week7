@@ -8,7 +8,7 @@ const routes = [
     { path: "/admin/productList", name: "後台產品列表" },
 ];
 
-export default function FrontLayout() {
+export default function AdminLayout() {
     return (<>
     < Navbar routes={routes}/>
     <Outlet/>
