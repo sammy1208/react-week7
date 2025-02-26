@@ -63,7 +63,6 @@ function ProductListPage () {
       );
       setProduct(res.data.products);
       setPageInfo(res.data.pagination);
-      console.log(res.data.pagination)
     } catch (error) {
       alert(error.message)
       
@@ -84,7 +83,6 @@ function ProductListPage () {
       /(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/,
       "$1"
     );
-    console.log('Token:', token)
     if(!token){
       navigate('/login');
     }
