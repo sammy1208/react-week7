@@ -57,7 +57,10 @@ function ProductModal({
         imageUrl: uploadedImageUrl
       });
     } catch (error) {
-      alert(`上傳失敗`);
+      dispatch(pushMessage({
+        text: "上傳失敗",
+        status: "failed"
+      }))
     }
   };
 

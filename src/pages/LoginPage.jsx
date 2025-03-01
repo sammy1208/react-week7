@@ -35,7 +35,7 @@ function LoginPage( ) {
       axios.defaults.headers.common["Authorization"] = `${token}`;
       navigate("/admin/productList");
     } catch (error) {
-      alert(`登入失敗`);
+      alert(`登入失敗`)
     }
   };
 
@@ -44,7 +44,7 @@ function LoginPage( ) {
         await axios.post(`${BASE_URL}/v2/api/user/check`);
         navigate("/admin/productList");
     } catch (error) {
-        alert(`登入失敗`);
+      console.log("驗證失敗，可能是因為用戶已登出");
     }
   }
 
